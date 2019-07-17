@@ -14,18 +14,19 @@ class App extends Component {
   }
 
   updateGuess = event => {
-    this.setState({ guess: event.target.value })
+    this.setState({ guess: parseInt(event.target.value) })
   }
-
   checkWin = event => {
     event.preventDefault()
     // TODO: check if guess equal to randomValue and update this.state.win
+    if (this.state.guess === this.state.randomValue) {
+      this.setState({ win: true })
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <div>Current value: {this.state.randomValue}</div>
         <form>
           <label>
             Enter a guess:
@@ -38,6 +39,16 @@ class App extends Component {
           <input type="submit" value="Submit" onClick={this.checkWin} />
         </form>
         {this.state.win && <WinMessage />}
+
+        <button
+          onClick={() =>
+            this.setState({
+              randomValue: Math.floor(Math.random() * 100)
+            })
+          }
+        >
+          Generate a New Number{" "}
+        </button>
       </div>
     )
   }
